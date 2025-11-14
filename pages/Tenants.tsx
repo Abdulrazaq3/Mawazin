@@ -106,7 +106,7 @@ const TenantsTable: React.FC<{ tenants: Tenant[], onView: (t: Tenant) => void, o
           </thead>
           <tbody className="divide-y divide-slate-100">
              {isLoading ? <SkeletonLoader rows={5} cols={5} /> : tenants.length > 0 ? tenants.map((tenant, index) => (
-              <tr key={tenant.id} className="odd:bg-white even:bg-slate-50/50 group transition-colors duration-200 hover:bg-teal-50/50 opacity-0 animate-stagger-in" style={{ animationDelay: `${index * 50}ms` }}>
+              <tr key={tenant.id} className="odd:bg-white even:bg-slate-50/50 group transition-colors duration-200 hover:bg-teal-50/50 animate-stagger-in" style={{ animationDelay: `${index * 50}ms` }}>
                 <td className="p-4 whitespace-nowrap font-semibold text-slate-800">{tenant.name}</td>
                 <td className="p-4 whitespace-nowrap text-slate-600">{tenant.nationalId}</td>
                 <td className="p-4 whitespace-nowrap text-slate-600">{tenant.rentAmount.toLocaleString()} ر.س</td>

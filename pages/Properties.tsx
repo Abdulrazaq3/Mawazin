@@ -93,7 +93,7 @@ const PropertiesTable: React.FC<{ properties: Property[], onEdit: (p: Property) 
             <tbody className="divide-y divide-slate-100">
               {isLoading ? <SkeletonLoader rows={5} cols={5} /> : properties.length > 0 ? (
                 properties.map((property, index) => (
-                  <tr key={property.id} className="odd:bg-white even:bg-slate-50/50 group transition-colors duration-200 hover:bg-teal-50/50 opacity-0 animate-stagger-in" style={{ animationDelay: `${index * 50}ms` }}>
+                  <tr key={property.id} className="odd:bg-white even:bg-slate-50/50 group transition-colors duration-200 hover:bg-teal-50/50 animate-stagger-in" style={{ animationDelay: `${index * 50}ms` }}>
                     <td className="p-4 whitespace-nowrap font-semibold text-slate-800">{property.name}</td>
                     <td className="p-4 whitespace-nowrap text-slate-600">{property.city}</td>
                     <td className="p-4 whitespace-nowrap text-slate-600">{property.unitCount}</td>

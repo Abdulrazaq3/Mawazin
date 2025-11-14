@@ -27,7 +27,7 @@ const Register: React.FC<RegisterProps> = ({ onRegister, onNavigateToLogin }) =>
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row">
-      <div style={{backgroundColor: '#023337'}} className="w-full md:w-1/2 text-white flex flex-col justify-center items-center p-8 md:p-12 order-2 md:order-1 animate-fadeIn">
+      <div className="w-full md:w-1/2 bg-primary-dark text-white flex flex-col justify-center items-center p-8 md:p-12 order-2 md:order-1 animate-fadeIn">
         <MawazinLogo className="h-24 w-auto mb-6" />
         <h1 className="text-3xl md:text-4xl font-bold text-center mb-2">
           إدارة عقاراتك بذكاء وسهولة

@@ -61,8 +61,7 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
         </button>
          <div className="absolute bottom-0 left-0 right-0 h-1 bg-current opacity-20">
             <div 
-                className="h-full bg-current" 
-                style={{ animation: 'progress 4s linear forwards' }}
+                className="h-full bg-current animate-progress"
             ></div>
         </div>
     </div>

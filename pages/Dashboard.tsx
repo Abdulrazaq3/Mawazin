@@ -34,7 +34,7 @@ const UpcomingRemindersTable: React.FC<{ reminders: Reminder[], handleMarkRemind
           </thead>
           <tbody className="divide-y divide-slate-100">
              {isLoading ? <SkeletonLoader rows={3} cols={5} /> : reminders.length > 0 ? reminders.map((reminder, index) => (
-              <tr key={reminder.id} className="odd:bg-white even:bg-slate-50/50 hover:bg-teal-50/50 transition-colors duration-200 opacity-0 animate-stagger-in" style={{ animationDelay: `${index * 50}ms` }}>
+              <tr key={reminder.id} className="odd:bg-white even:bg-slate-50/50 hover:bg-teal-50/50 transition-colors duration-200 animate-stagger-in" style={{ animationDelay: `${index * 50}ms` }}>
                 <td className="p-4 whitespace-nowrap font-semibold text-slate-700">{reminder.tenantName}</td>
                 <td className="p-4 whitespace-nowrap text-slate-600">{reminder.propertyName}</td>
                 <td className="p-4 whitespace-nowrap font-medium text-slate-700">{reminder.rentAmount.toLocaleString()} ر.س</td>
@@ -90,7 +90,7 @@ const Dashboard: React.FC<{ reminders: Reminder[], handleMarkReminderAsPaid: (id
           ))
         ) : (
           kpis.map((kpi, index) => (
-            <div key={index} className="group opacity-0 animate-stagger-in" style={{ animationDelay: `${index * 100}ms` }}>
+            <div key={index} className="group animate-stagger-in" style={{ animationDelay: `${index * 100}ms` }}>
               <StatCard {...kpi} />
             </div>
           ))

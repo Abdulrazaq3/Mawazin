@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onMenuClick }) => {
           />
         </div>
         <button className="group p-2 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition">
-          <BellIcon className="h-6 w-6 animate-shake-on-hover" />
+          <BellIcon className="h-6 w-6 group-hover:animate-shake" />
         </button>
         <div className="w-10 h-10 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold text-lg shadow-inner shrink-0">
           أ

@@ -116,7 +116,7 @@ const TransactionsTable: React.FC<{ transactions: Transaction[], onView: (tx: Tr
           </thead>
           <tbody className="divide-y divide-slate-100">
              {isLoading ? <SkeletonLoader rows={5} cols={6} /> : transactions.length > 0 ? transactions.map((tx, index) => (
-              <tr key={tx.id} className="odd:bg-white even:bg-slate-50/50 group transition-colors duration-200 hover:bg-teal-50/50 opacity-0 animate-stagger-in" style={{ animationDelay: `${index * 50}ms` }}>
+              <tr key={tx.id} className="odd:bg-white even:bg-slate-50/50 group transition-colors duration-200 hover:bg-teal-50/50 animate-stagger-in" style={{ animationDelay: `${index * 50}ms` }}>
                 <td className="p-4 whitespace-nowrap">
                   <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
                     tx.type === 'Revenue' ? 'bg-teal-100 text-teal-800' : 'bg-red-100 text-red-800'
