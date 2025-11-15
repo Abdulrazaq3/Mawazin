@@ -1,5 +1,4 @@
 
-
 import React, { useState, useMemo } from 'react';
 import { Property } from '../types';
 import { PlusIcon, EyeIcon, PencilIcon, TrashIcon, SearchIcon, SpinnerIcon, PropertiesIcon } from '../components/icons';
@@ -77,17 +76,57 @@ const PropertyDetails: React.FC<{ property: Property }> = ({ property }) => (
     </div>
 );
 
-const PropertiesTable: React.FC<{ properties: Property[], onEdit: (p: Property) => void, onView: (p: Property) => void, onDelete: (id: number) => void, isLoading: boolean, onAdd: () => void }> = ({ properties, onEdit, onView, onDelete, isLoading, onAdd }) => {
+const PropertiesTable: React.FC<{ 
+  properties: Property[], 
+  onEdit: (p: Property) => void, 
+  onView: (p: Property) => void, 
+  onDelete: (id: number) => void, 
+  isLoading: boolean, 
+  onAdd: () => void,
+  sortOption: string,
+  setSortOption: (option: string) => void
+}> = ({ properties, onEdit, onView, onDelete, isLoading, onAdd, sortOption, setSortOption }) => {
+    
+    const onSort = (key: string) => {
+        const [currentKey, currentDirection] = sortOption.split('-');
+        let newDirection = 'asc';
+        if (key === currentKey && currentDirection === 'asc') {
+            newDirection = 'desc';
+        }
+        setSortOption(`${key}-${newDirection}`);
+    };
+
+    const SortableHeader: React.FC<{ 
+        label: string; 
+        sortKey: string; 
+        className?: string;
+    }> = ({ label, sortKey, className }) => {
+        const [currentKey, currentDirection] = sortOption.split('-');
+        const isActive = currentKey === sortKey;
+
+        return (
+            <th className={`p-4 text-sm font-semibold text-slate-500 text-right uppercase tracking-wider dark:text-slate-400 ${className || ''}`}>
+                <button onClick={() => onSort(sortKey)} className="flex items-center gap-1.5 group transition-colors">
+                    <span className="group-hover:text-slate-700 dark:group-hover:text-slate-200">{label}</span>
+                    <div className="w-4 h-4 flex flex-col items-center justify-center">
+                         <svg className={`h-2.5 w-2.5 -mb-1 ${isActive && currentDirection === 'asc' ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'}`} fill="currentColor" viewBox="0 0 20 20"><path d="M10 3l-5 5h10l-5-5z"></path></svg>
+                         <svg className={`h-2.5 w-2.5 -mt-1 ${isActive && currentDirection === 'desc' ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'}`} fill="currentColor" viewBox="0 0 20 20"><path d="M10 17l5-5H5l5 5z"></path></svg>
+                    </div>
+                </button>
+            </th>
+        )
+    }
+
   return (
     <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-slate-200/80 dark:bg-slate-800 dark:border-slate-700">
       <div className="overflow-x-auto">
           <table className="w-full text-right min-w-[768px]">
             <thead>
               <tr className="border-b border-slate-200 dark:border-slate-700">
-                <th className="p-4 text-sm font-semibold text-slate-500 text-right uppercase tracking-wider dark:text-slate-400">الاسم</th>
+                <SortableHeader label="الاسم" sortKey="name" />
                 <th className="p-4 text-sm font-semibold text-slate-500 text-right uppercase tracking-wider dark:text-slate-400">المدينة</th>
-                <th className="p-4 text-sm font-semibold text-slate-500 text-right uppercase tracking-wider dark:text-slate-400">الوحدات</th>
-                <th className="p-4 text-sm font-semibold text-slate-500 text-right uppercase tracking-wider dark:text-slate-400">الإشغال</th>
+                <SortableHeader label="الوحدات" sortKey="units" />
+                <SortableHeader label="الإشغال" sortKey="occupancy" />
                 <th className="p-4 text-sm font-semibold text-slate-500 text-center uppercase tracking-wider dark:text-slate-400">إجراءات</th>
               </tr>
             </thead>
@@ -179,14 +218,32 @@ const Properties: React.FC<{
       property.city.toLowerCase().includes(searchQuery.toLowerCase())
     );
     const sorted = [...filtered];
-    switch (sortOption) {
-      case 'name-asc': sorted.sort((a, b) => a.name.localeCompare(b.name, 'ar')); break;
-      case 'name-desc': sorted.sort((a, b) => b.name.localeCompare(a.name, 'ar')); break;
-      case 'occupancy-desc': sorted.sort((a, b) => b.occupancyRate - a.occupancyRate); break;
-      case 'occupancy-asc': sorted.sort((a, b) => a.occupancyRate - b.occupancyRate); break;
-      case 'units-desc': sorted.sort((a, b) => b.unitCount - a.unitCount); break;
-      case 'units-asc': sorted.sort((a, b) => a.unitCount - b.unitCount); break;
-    }
+    const [sortKey, sortDirection] = sortOption.split('-');
+
+    sorted.sort((a, b) => {
+        let aValue: string | number;
+        let bValue: string | number;
+
+        if (sortKey === 'name') {
+            aValue = a.name;
+            bValue = b.name;
+        } else if (sortKey === 'units') {
+            aValue = a.unitCount;
+            bValue = b.unitCount;
+        } else if (sortKey === 'occupancy') {
+            aValue = a.occupancyRate;
+            bValue = b.occupancyRate;
+        } else {
+            return 0;
+        }
+
+        const comparison = typeof aValue === 'string' && typeof bValue === 'string'
+            ? aValue.localeCompare(bValue, 'ar')
+            : (aValue as number) - (bValue as number);
+
+        return sortDirection === 'asc' ? comparison : -comparison;
+    });
+
     return sorted;
   }, [properties, searchQuery, sortOption]);
 
@@ -205,7 +262,7 @@ const Properties: React.FC<{
             </button>
         </div>
       </div>
-      <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200/80 flex flex-col sm:flex-row items-center justify-between flex-wrap gap-4 dark:bg-slate-800 dark:border-slate-700">
+      <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200/80 flex items-center justify-between flex-wrap gap-4 dark:bg-slate-800 dark:border-slate-700">
            <div className="relative w-full sm:w-auto">
                 <input
                     type="text"
@@ -219,24 +276,6 @@ const Properties: React.FC<{
                     <SearchIcon />
                 </div>
             </div>
-            <div className="flex items-center gap-2 w-full sm:w-auto">
-                <label htmlFor="sort-properties" className="text-sm font-medium text-slate-600 shrink-0 dark:text-slate-300">ترتيب حسب:</label>
-                <select
-                    id="sort-properties"
-                    value={sortOption}
-                    onChange={(e) => setSortOption(e.target.value)}
-                    className="pl-4 pr-8 py-2 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 appearance-none bg-no-repeat bg-left transition w-full dark:bg-slate-700 dark:border-slate-600 dark:text-white"
-                    style={{ backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`, backgroundPosition: 'left 0.5rem center', backgroundSize: '1.5em 1.5em' }}
-                    aria-label="ترتيب العقارات"
-                >
-                    <option value="name-asc">الاسم (تصاعدي)</option>
-                    <option value="name-desc">الاسم (تنازلي)</option>
-                    <option value="occupancy-desc">الإشغال (الأعلى)</option>
-                    <option value="occupancy-asc">الإشغال (الأدنى)</option>
-                    <option value="units-desc">الوحدات (الأكثر)</option>
-                    <option value="units-asc">الوحدات (الأقل)</option>
-                </select>
-            </div>
       </div>
       <PropertiesTable 
         properties={filteredAndSortedProperties} 
@@ -245,6 +284,8 @@ const Properties: React.FC<{
         onDelete={deleteProperty} 
         isLoading={isLoading}
         onAdd={() => openModal('add')}
+        sortOption={sortOption}
+        setSortOption={setSortOption}
       />
       
       <Modal isOpen={isModalOpen} onClose={closeModal} title={

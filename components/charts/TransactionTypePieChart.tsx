@@ -1,8 +1,6 @@
-
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
-// Fix: Added index signature to satisfy recharts' data prop typing.
 interface ChartData {
   name: string;
   value: number;

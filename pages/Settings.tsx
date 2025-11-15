@@ -32,7 +32,6 @@ const ToggleSwitch: React.FC<{ label: string; enabled: boolean; setEnabled: (ena
   </div>
 );
 
-// FIX: Add optional disabled prop to SettingsButton and combine it with isLoading
 const SettingsButton: React.FC<{ onClick: (e: React.MouseEvent<HTMLButtonElement>) => void; children: React.ReactNode; isLoading: boolean; className?: string; disabled?: boolean; }> = ({ onClick, children, isLoading, className, disabled }) => (
     <button
         type="button"
@@ -187,7 +186,6 @@ const Settings: React.FC<{ addToast: (toast: Omit<ToastMessage, 'id'>) => void }
                     onClick={handleDeleteAccount} 
                     isLoading={isDeleting} 
                     className={`bg-red-600 hover:bg-red-700 focus:ring-red-500 disabled:!bg-slate-400 dark:disabled:!bg-slate-600 disabled:cursor-not-allowed`}
-                    // FIX: Pass only the additional condition to disabled. The `isDeleting` check is handled by `isLoading`.
                     disabled={deleteConfirmationText !== 'حذف حسابي'}
                 >
                     أنا أفهم، قم بالحذف

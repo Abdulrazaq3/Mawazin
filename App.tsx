@@ -11,6 +11,7 @@ import Settings from './pages/Settings';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import LandingPage from './pages/LandingPage';
 import Toast from './components/Toast';
 import { Page, Property, Tenant, Transaction, Reminder, ToastMessage, Note } from './types';
 import { properties as mockProperties, tenants as mockTenants, transactions as mockTransactions, reminders as mockReminders, mockNotes } from './data/mockData';
@@ -21,6 +22,7 @@ const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('لوحة التحكم');
   const [isLoading, setIsLoading] = useState(true);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
+  const [view, setView] = useState<'landing' | 'auth'>('landing');
 
   const [properties, setProperties] = useState<Property[]>([]);
   const [tenants, setTenants] = useState<Tenant[]>([]);
@@ -42,29 +44,23 @@ const App: React.FC = () => {
   }, []);
   
   useEffect(() => {
-    const theme = localStorage.getItem('theme') || 'system';
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    const applyTheme = (t: string) => {
-      if (t === 'dark' || (t === 'system' && mediaQuery.matches)) {
+    const applyTheme = () => {
+      const theme = localStorage.getItem('theme') || 'system';
+      if (theme === 'dark' || (theme === 'system' && mediaQuery.matches)) {
         document.documentElement.classList.add('dark');
       } else {
         document.documentElement.classList.remove('dark');
       }
     };
     
-    applyTheme(theme);
+    applyTheme();
     
-    const mediaListener = () => {
-        const currentTheme = localStorage.getItem('theme') || 'system';
-        if (currentTheme === 'system') {
-            applyTheme('system');
-        }
-    };
-    mediaQuery.addEventListener('change', mediaListener);
+    mediaQuery.addEventListener('change', applyTheme);
 
     return () => {
-        mediaQuery.removeEventListener('change', mediaListener);
+      mediaQuery.removeEventListener('change', applyTheme);
     };
   }, []);
 
@@ -220,10 +216,12 @@ const App: React.FC = () => {
           ))}
       </div>
       {!isLoggedIn ? (
-        authScreen === 'login' ? (
-            <Login onLogin={handleLogin} onNavigateToRegister={() => setAuthScreen('register')} />
+        view === 'landing' ? (
+          <LandingPage onNavigateToAuth={() => setView('auth')} addToast={addToast} />
+        ) : authScreen === 'login' ? (
+          <Login onLogin={handleLogin} onNavigateToRegister={() => setAuthScreen('register')} onNavigateToLanding={() => setView('landing')} />
         ) : (
-            <Register onRegister={handleRegister} onNavigateToLogin={() => setAuthScreen('login')} />
+          <Register onRegister={handleRegister} onNavigateToLogin={() => setAuthScreen('login')} onNavigateToLanding={() => setView('landing')} />
         )
       ) : (
         <Layout currentPage={currentPage} setCurrentPage={setCurrentPage}>
