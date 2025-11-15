@@ -21,12 +21,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
       aria-labelledby="modal-title"
     >
       <div 
-        className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col animate-scaleIn" 
+        className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col animate-scaleIn dark:bg-slate-800" 
         onClick={e => e.stopPropagation()}
       >
-        <header className="flex items-center justify-between p-4 border-b border-slate-200 sticky top-0 bg-white rounded-t-xl z-10">
-          <h3 id="modal-title" className="text-xl font-bold text-slate-800">{title}</h3>
-          <button onClick={onClose} className="p-2 rounded-full hover:bg-slate-100" aria-label="إغلاق">
+        <header className="flex items-center justify-between p-4 border-b border-slate-200 sticky top-0 bg-white rounded-t-xl z-10 dark:bg-slate-800 dark:border-slate-700">
+          <h3 id="modal-title" className="text-xl font-bold text-slate-800 dark:text-slate-100">{title}</h3>
+          <button onClick={onClose} className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700" aria-label="إغلاق">
             <CloseIcon />
           </button>
         </header>

@@ -40,6 +40,34 @@ const App: React.FC = () => {
     }, 1500);
     return () => clearTimeout(timer);
   }, []);
+  
+  useEffect(() => {
+    const theme = localStorage.getItem('theme') || 'system';
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const applyTheme = (t: string) => {
+      if (t === 'dark' || (t === 'system' && mediaQuery.matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    };
+    
+    applyTheme(theme);
+    
+    const mediaListener = () => {
+        const currentTheme = localStorage.getItem('theme') || 'system';
+        if (currentTheme === 'system') {
+            applyTheme('system');
+        }
+    };
+    mediaQuery.addEventListener('change', mediaListener);
+
+    return () => {
+        mediaQuery.removeEventListener('change', mediaListener);
+    };
+  }, []);
+
 
   const addToast = (toast: Omit<ToastMessage, 'id'>) => {
     setToasts(prev => [...prev, { ...toast, id: Date.now() }]);

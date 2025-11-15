@@ -31,8 +31,16 @@ const TransactionTypePieChart: React.FC<{ data: ChartData[] }> = ({ data }) => {
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Tooltip formatter={(value: number) => `${value.toLocaleString()} ر.س`} />
-          <Legend wrapperStyle={{ fontSize: '14px' }}/>
+          <Tooltip 
+            formatter={(value: number) => `${value.toLocaleString()} ر.س`}
+            contentStyle={{
+                backgroundColor: 'var(--recharts-tooltip-bg)',
+                borderColor: 'var(--recharts-tooltip-border)',
+                color: 'var(--recharts-text-color)',
+                borderRadius: '0.5rem'
+            }}
+          />
+          <Legend wrapperStyle={{ fontSize: '14px', color: 'var(--recharts-text-color)' }}/>
         </PieChart>
       </ResponsiveContainer>
     </div>

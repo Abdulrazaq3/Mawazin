@@ -32,7 +32,7 @@ const Reports: React.FC = () => {
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 print-container">
          {kpiCards.map((kpi, index) => (
-            <div key={index} className="group animate-stagger-in" style={{ animationDelay: `${index * 100}ms` }}>
+            <div key={index} className="group opacity-0 animate-stagger-in" style={{ animationDelay: `${index * 100}ms` }}>
               <StatCard {...kpi} />
             </div>
           ))}

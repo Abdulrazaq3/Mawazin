@@ -34,9 +34,9 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
 
   const baseClasses = "flex items-center p-4 mb-4 text-sm rounded-lg shadow-lg transition-all duration-300 transform relative overflow-hidden";
   const typeClasses = {
-      success: 'bg-teal-50 text-teal-800 border-r-4 border-teal-500',
-      info: 'bg-teal-50 text-teal-800 border-r-4 border-teal-500',
-      error: 'bg-red-50 text-red-800 border-r-4 border-red-500',
+      success: 'bg-teal-50 text-teal-800 border-r-4 border-teal-500 dark:bg-teal-900/50 dark:text-teal-300 dark:border-teal-500',
+      info: 'bg-teal-50 text-teal-800 border-r-4 border-teal-500 dark:bg-teal-900/50 dark:text-teal-300 dark:border-teal-500',
+      error: 'bg-red-50 text-red-800 border-r-4 border-red-500 dark:bg-red-900/50 dark:text-red-300 dark:border-red-500',
   };
   const animationClasses = isExiting ? "opacity-0 translate-x-10" : "opacity-100 translate-x-0";
 
@@ -61,7 +61,8 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
         </button>
          <div className="absolute bottom-0 left-0 right-0 h-1 bg-current opacity-20">
             <div 
-                className="h-full bg-current animate-progress"
+                className="h-full bg-current" 
+                style={{ animation: 'progress 4s linear forwards' }}
             ></div>
         </div>
     </div>

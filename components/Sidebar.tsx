@@ -65,9 +65,9 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, isOpen, 
   }
 
   return (
-    <aside className={`fixed top-0 bottom-0 right-0 w-64 bg-primary-dark flex-shrink-0 shadow-lg z-40 transition-transform duration-300 ease-in-out md:relative md:translate-x-0 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+    <aside style={{backgroundColor: '#023337'}} className={`fixed top-0 bottom-0 right-0 w-64 flex-shrink-0 shadow-lg z-40 transition-transform duration-300 ease-in-out md:relative md:translate-x-0 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
       <div className="flex flex-col h-full">
-        <div className="h-28 flex items-center justify-center border-b border-white/10 px-4">
+        <div className="h-28 flex items-center justify-center border-b px-4" style={{borderColor: 'rgba(255, 255, 255, 0.1)'}}>
           <MawazinLogo className="h-20 w-auto" />
         </div>
         <nav className="flex-1 px-4 py-4 overflow-y-auto">
@@ -85,7 +85,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, isOpen, 
             ))}
           </ul>
         </nav>
-        <div className="px-4 py-4 border-t border-white/10">
+        <div className="px-4 py-4 border-t" style={{borderColor: 'rgba(255, 255, 255, 0.1)'}}>
              <ul>
                  {bottomNavItems.map((item) => (
                   <NavItem

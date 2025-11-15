@@ -21,17 +21,22 @@ const CategoryBarChart: React.FC<{ data: ChartData[] }> = ({ data }) => {
             bottom: 80,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0"/>
-          <XAxis dataKey="name" tick={{fill: '#64748b', fontSize: 12}} angle={-45} textAnchor="end" interval={0} dy={10} />
+          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--recharts-grid-color)"/>
+          <XAxis dataKey="name" tick={{fill: 'var(--recharts-text-color)', fontSize: 12}} angle={-45} textAnchor="end" interval={0} dy={10} />
           <YAxis 
             tickFormatter={(value) => `${(value as number) / 1000} ألف`} 
-            tick={{fill: '#64748b', fontSize: 12}}
+            tick={{fill: 'var(--recharts-text-color)', fontSize: 12}}
             axisLine={false}
             tickLine={false}
           />
           <Tooltip 
             formatter={(value: number, name: string) => [`${value.toLocaleString()} ر.س`, name === 'revenue' ? 'إيرادات' : 'مصروفات']} 
             cursor={{ fill: 'rgba(20, 184, 166, 0.1)' }} 
+            contentStyle={{
+                backgroundColor: 'var(--recharts-tooltip-bg)',
+                borderColor: 'var(--recharts-tooltip-border)',
+                borderRadius: '0.5rem'
+            }}
           />
           <Legend wrapperStyle={{ fontSize: '14px', direction: 'rtl' }}/>
           <Bar dataKey="revenue" fill="#14b8a6" name="إيرادات" animationDuration={800} radius={[4, 4, 0, 0]} />

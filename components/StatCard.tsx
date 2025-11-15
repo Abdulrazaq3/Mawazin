@@ -54,20 +54,20 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, icon, color, unit }) 
     const [sparklineData] = useState(generateSparklineData());
 
     const colorClasses: { [key: string]: string } = {
-        cyan: 'text-cyan-700',
-        red: 'text-red-500',
-        teal: 'text-teal-500',
-        amber: 'text-amber-500',
+        cyan: 'text-cyan-700 dark:text-cyan-400',
+        red: 'text-red-500 dark:text-red-400',
+        teal: 'text-teal-500 dark:text-teal-400',
+        amber: 'text-amber-500 dark:text-amber-400',
     };
     const strokeColors: { [key: string]: string } = {
-        cyan: '#0e7490', // cyan-700
-        red: '#ef4444', // red-500
-        teal: '#14b8a6', // teal-500
-        amber: '#f59e0b', // amber-500
+        cyan: '#0891b2', // cyan-600
+        red: '#f87171', // red-400
+        teal: '#2dd4bf', // teal-400
+        amber: '#facc15', // amber-400
     };
 
   return (
-    <div className="bg-white p-5 rounded-xl shadow-sm border border-slate-200/80 flex flex-col justify-between h-full transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-2 group-hover:scale-[1.02]">
+    <div className="bg-white p-5 rounded-xl shadow-sm border border-slate-200/80 flex flex-col justify-between h-full transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-2 group-hover:scale-[1.02] dark:bg-slate-800 dark:border-slate-700">
       <div className="flex items-center justify-between">
          <div className={colorClasses[color] || 'text-slate-500'}>{icon}</div>
          <div className="w-16 h-8">
@@ -79,8 +79,8 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, icon, color, unit }) 
          </div>
       </div>
       <div>
-        <p className="text-sm text-slate-500 font-medium">{title}</p>
-        <p className="text-2xl font-bold text-slate-800">
+        <p className="text-sm text-slate-500 font-medium dark:text-slate-400">{title}</p>
+        <p className="text-2xl font-bold text-slate-800 dark:text-slate-100">
           <AnimatedNumber value={value} /> {unit}
         </p>
       </div>

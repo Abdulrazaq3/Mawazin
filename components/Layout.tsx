@@ -14,7 +14,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-screen bg-slate-50 text-slate-800 relative overflow-hidden md:overflow-auto">
+    <div className="flex h-screen bg-slate-50 text-slate-800 relative overflow-hidden md:overflow-auto dark:bg-slate-900 dark:text-slate-300">
       {isSidebarOpen && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden animate-fadeInFast"
@@ -30,7 +30,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
       />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header currentPage={currentPage} onMenuClick={() => setIsSidebarOpen(true)} />
-        <main key={currentPage} className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-4 sm:p-6 md:p-8 animate-fadeIn">
+        <main key={currentPage} className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-4 sm:p-6 md:p-8 animate-fadeIn dark:bg-slate-900">
           {children}
         </main>
       </div>
